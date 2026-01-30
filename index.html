@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini-questionnaire — Horizon 22</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+      line-height: 1.6;
+      max-width: 820px;
+    }
+    .notice {
+      background: #f6f6f6;
+      border-left: 4px solid #999;
+      padding: 12px 14px;
+      border-radius: 6px;
+      margin: 1em 0 1.5em;
+      font-size: 0.95em;
+    }
+    fieldset {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin: 0 0 12px 0;
+    }
+    legend {
+      font-weight: bold;
+      padding: 0 6px;
+    }
+    .actions {
+      margin-top: 1em;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    button, a.btn {
+      background-color: #eee;
+      border: 1px solid #ddd;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #000;
+      display: inline-block;
+    }
+    button.primary, a.btn.primary {
+      background-color: #111;
+      color: #fff;
+      border-color: #111;
+    }
+    .score-message {
+      margin-top: 1em;
+      font-weight: bold;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #fafafa;
+      border: 1px solid #eee;
+    }
+    #guide-fr {
+      display: none;
+      margin-top: 2em;
+      padding-top: 1em;
+      border-top: 1px solid #eee;
+    }
+    .error {
+      color: #b00020;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    label.option {
+      display: block;
+      margin: 6px 0;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bienvenue</h1>
+  <p>Mini-questionnaire pour vérifier si mon approche peut vous convenir.</p>
+
+  <div class="notice">
+    <strong>À noter :</strong> ce questionnaire n’a aucune valeur diagnostique et ne remplace pas une consultation.
+    Il sert simplement à réfléchir à vos préférences (style relationnel, cadre, approche) afin de mieux orienter votre démarche.
+    Il n’y a pas de “bonne” ou de “mauvaise” réponse.
+  </div>
+
+  <form id="questionnaire">
+
+    <fieldset>
+      <legend>1. Quel type de relation thérapeutique recherchez-vous ?</legend>
+      <label class="option"><input type="radio" name="q1" value="2" /> Une présence active, impliquée, humaine</label>
+      <label class="option"><input type="radio" name="q1" value="1" /> Une posture neutre, contenante, discrète</label>
+      <label class="option"><input type="radio" name="q1" value="1" /> Une posture directrice et structurée</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. Vous appréciez quand votre thérapeute :</legend>
+      <label class="option"><input type="radio" name="q2" value="2" /> Vous soutient activement, avec des outils concrets</label>
+      <label class="option"><input type="radio" name="q2" value="1" /> Vous challenge pour faire émerger vos ressources</label>
+      <label class="option"><input type="radio" name="q2" value="1" /> Vous écoute avec une présence discrète</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. En séance, vous vous sentez en confiance quand :</legend>
+      <label class="option"><input type="radio" name="q3" value="2" /> Vous pouvez rire, pleurer, réfléchir librement</label>
+      <label class="option"><input type="radio" name="q3" value="1" /> Le cadre est clair, structuré</label>
+      <label class="option"><input type="radio" name="q3" value="1" /> Le thérapeute est discret et très sobre</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>4. Pour vous, le/la psy idéal·e :</legend>
+      <label class="option"><input type="radio" name="q4" value="2" /> Est chaleureux·se, sincère, dynamique</label>
+      <label class="option"><input type="radio" name="q4" value="1" /> Est professionnel·le, sobre, rassurant·e</label>
+      <label class="option"><input type="radio" name="q4" value="1" /> Est neutre, stable, discret·e</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>5. Vous préférez :</legend>
+      <label class="option"><input type="radio" name="q5" value="2" /> Une approche intégrative, adaptée</label>
+      <label class="option"><input type="radio" name="q5" value="2" /> Une approche TCC avec objectifs et outils</label>
+      <label class="option"><input type="radio" name="q5" value="1" /> Une approche psychanalytique</label>
+    </fieldset>
+
+    <div class="actions">
+      <button type="button" class="primary" onclick="calculerScore()">Voir mon résultat</button>
+      <button type="button" id="btn-guide" onclick="toggleGuide()" style="display:none;">📘 Lire le guide</button>
+      <!-- Remplace l’URL ci-dessous par ton lien Perfactive -->
+      <a class="btn" id="btn-rdv" href="https://perfactive.fr/psychologue/paris/melanie-guessoum" target="_blank" rel="noopener" style="display:none;">📅 Prendre rendez-vous</a>
+    </div>
+
+    <div id="error" class="error" style="display:none;"></div>
+  </form>
+
+  <div id="resultat" class="score-message" style="display:none;"></div>
+
+  <!-- Guide -->
+  <section id="guide-fr">
+    <!-- Tu peux garder ton guide tel quel ici -->
+    <h2>📘 Mon guide pour trouver votre psy</h2>
+    <p><strong>🧠 TROUVER SON PSY, VRAIMENT</strong></p>
+    <p>Un guide bienveillant pour vous accompagner dans la recherche du professionnel qui vous correspond.</p>
+    <p>… (garde le reste de ton contenu ici) …</p>
+  </section>
+
+  <script>
+    function toggleGuide() {
+      const guide = document.getElementById('guide-fr');
+      guide.style.display = (guide.style.display === 'block') ? 'none' : 'block';
+      if (guide.style.display === 'block') {
+        guide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function calculerScore() {
+      const error = document.getElementById('error');
+      error.style.display = 'none';
+      error.innerText = '';
+
+      // Vérifie que toutes les questions ont une réponse
+      for (let i = 1; i <= 5; i++) {
+        const checked = document.querySelector(`input[name="q${i}"]:checked`);
+        if (!checked) {
+          error.style.display = 'block';
+          error.innerText = "Merci de répondre à toutes les questions avant de voir le résultat 🙂";
+          return;
+        }
+      }
+
+      // Calcule le score
+      let score = 0;
+      for (let i = 1; i <= 5; i++) {
+        score += parseInt(document.querySelector(`input[name="q${i}"]:checked`).value, 10);
+      }
+
+      const resultat = document.getElementById('resultat');
+      const guideBtn = document.getElementById('btn-guide');
+      const rdvBtn = document.getElementById('btn-rdv');
+
+      resultat.style.display = 'block';
+      guideBtn.style.display = 'inline-block';
+      rdvBtn.style.display = 'inline-block';
+
+      // Messages orientés "compatibilité" (pas d'évaluation/tri)
+      if (score >= 8) {
+        resultat.innerText =
+          "✨ Votre préférence semble aller vers une relation thérapeutique active, structurée et concrète — un style qui correspond généralement bien à mon approche. " +
+          "Si vous le souhaitez, vous pouvez réserver une première consultation.";
+      } else if (score >= 5) {
+        resultat.innerText =
+          "🌿 Certaines de vos préférences peuvent bien correspondre à mon style, et d’autres peut-être moins. " +
+          "Je vous conseille de lire le guide ci-dessous et, si vous en avez envie, de réserver une première consultation pour en discuter.";
+      } else {
+        resultat.innerText =
+          "💬 Vos réponses suggèrent que vous pourriez être plus à l’aise avec un autre style d’accompagnement. " +
+          "Je vous invite à lire le guide pour explorer d’autres pistes — et si vous hésitez, une première consultation peut aussi vous aider à clarifier.";
+      }
+    }
+  </script>
+</body>
+</html> 
